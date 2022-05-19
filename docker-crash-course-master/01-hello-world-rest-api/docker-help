@@ -1,0 +1,25 @@
+#Build a Docker Image for Hello World Rest API
+
+1) Build a JAR
+	- /target/hello-world-rest-api.jar
+2) Setup the Prerequisites for Running the JAR
+	- openjdk:8-jdk-alpine
+3) Copy the JAR
+	docker container exec 69fb1 ls /tmp
+	docker container cp target/hello-world-rest-api.tar <container>:/tmp
+4) Run the JAR
+	*1 docker container commit --change="CMD ['java','-jar','/tmp/hello-world-rest-api.jar']" determined_tesla in28min/hello-world-rest-api:manual2
+	*2 docker container commit --change "cmd = 'java -jar /tmp/hello-world-rest-api.jar'" awesome_kare in28min/hello-world-rest-api:manual1
+	*3 docker container commit --change="CMD 'java -jar /tmp/hello-world-rest-api.jar'" awesome_kare in28min/hello-world-rest-api:manual1
+
+	docker images
+	docker run -p 8080:8080 -d in28min/hello-world-rest-api:manual1
+	
+5) Dockerfile build:
+	docker build -t in28min/hello-world-rest-api:dockerfile1 .
+6) Run
+	docker run -p 8080:8080 -d in28min/hello-world-rest-api:dockerfile1
+	
+7) Build with maven:
+	mvn package -DskipTests
+	mvn clean package -DskipTests
